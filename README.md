@@ -1,16 +1,11 @@
-# task_manager
+# Flutter Template
 
-A new Flutter application.
+## 概要
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 環境
+- IDE：Android Studio Arctic Fox | 2021.2.1 Patch 1　
+- Flutter: 3.3.9
+- Kotlin：1.6.10
+- Gradle：7.2.1
+- minSdk：23
+- targetSdk：31
