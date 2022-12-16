@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/components/appbar/appbar_notifier.dart';
 import 'package:flutter_template/pages/setting/children/notification/notification_notifier.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:location/location.dart';
+
 
 ///
 /// appbar
@@ -46,6 +48,13 @@ final isNotificationProvider = StateNotifierProvider.family<IsNotificationNotifi
 ///
 /// location
 ///
+
+final currentLocationStreamProvider = StreamProvider.autoDispose((ref) {
+  final location = Location();
+  // ignore: cascade_invocations
+  location.enableBackgroundMode(enable: true);
+  return location.onLocationChanged;
+});
 
 final nearLocationProvider = StreamProvider((ref) {
   final db = FirebaseFirestore.instance;
