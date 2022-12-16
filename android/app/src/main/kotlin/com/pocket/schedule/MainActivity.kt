@@ -1,4 +1,4 @@
-package com.pocket.schedule
+package com.megaro
 
 import io.flutter.embedding.android.FlutterActivity
 
