@@ -43,41 +43,6 @@ class _MyAppState extends ConsumerState<MyApp> {
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   @override
-  void initState() {
-    super.initState();
-
-    _firebaseMessaging.getToken().then((String? token) {
-      ref.read(tokenProvider.notifier).update((state) => token!);
-      CollectionReference users =
-          FirebaseFirestore.instance.collection('users');
-      users.doc(token).set({
-        'token': token,
-      });
-      print("$token");
-    });
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("フォアグラウンドでメッセージを受け取りました");
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
-
-      if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              android: AndroidNotificationDetails(
-                channel.id,
-                channel.name,
-                icon: 'launch_background',
-              ),
-            ));
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       localizationsDelegates: [
