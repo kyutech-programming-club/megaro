@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/documents/example_document/example_document.dart';
+import 'package:flutter_template/documents/location_document/location_document.dart';
 import 'package:flutter_template/providers/infrastructure_providers.dart';
 
 final firestoreProvider = Provider<FirestoreDataSource>((ref) =>
@@ -26,5 +27,13 @@ class FirestoreDataSource {
     final col =
         await collectionRef.where('exampleId', isEqualTo: exampleId).get();
     await collectionRef.doc(col.docs.first.id).delete();
+  }
+
+  ///
+  /// location
+  ///
+
+  Future<void> insertLocation(LocationDocument locationDocument) async {
+    await collectionRef.add(locationDocument.toJson());
   }
 }
