@@ -7,7 +7,7 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => RootPage(),
+      builder: (context, state) => TopPage(),
       routes: [
         GoRoute(
           path: 'notification/:',
