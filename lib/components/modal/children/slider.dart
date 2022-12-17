@@ -13,8 +13,8 @@ class CustomSlider extends ConsumerWidget {
     return Column(
       children: [
         Slider(
-          activeColor: ColorConstant.purple40,
-          inactiveColor: ColorConstant.purple90,
+          activeColor: ColorConstant.green40,
+          inactiveColor: ColorConstant.green90,
           value: sliderValue.toDouble(),
           max: 7,
           divisions: 7,

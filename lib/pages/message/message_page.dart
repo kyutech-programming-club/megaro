@@ -11,7 +11,7 @@ class MessagePage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: ColorConstant.black100,
-        foregroundColor: ColorConstant.purple40,
+        foregroundColor: ColorConstant.green40,
       ),
       body: SafeArea(
         child: Container(

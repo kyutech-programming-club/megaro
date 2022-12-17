@@ -14,7 +14,7 @@ class CustomCheckBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Checkbox(
       value: isSelected,
-      activeColor: ColorConstant.purple40,
+      activeColor: ColorConstant.green40,
       onChanged: onChanged,
     );
   }

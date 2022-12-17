@@ -15,7 +15,7 @@ class SwitchButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Switch(
       value: isSelected,
-      activeColor: ColorConstant.purple40,
+      activeColor: ColorConstant.green40,
       onChanged: onChanged,
     );
   }

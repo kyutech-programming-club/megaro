@@ -15,7 +15,7 @@ class TalkPage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: ColorConstant.black100,
-        foregroundColor: ColorConstant.purple40,
+        foregroundColor: ColorConstant.green40,
         title: Text('aaa'),
       ),
       body: SafeArea(
@@ -52,9 +52,9 @@ class TalkPage extends StatelessWidget {
                 child: TextFormField(
                   textAlign: TextAlign.left,
                   autofocus: true,
-                  cursorColor: ColorConstant.purple40,
+                  cursorColor: ColorConstant.green40,
                   decoration: InputDecoration(
-                    fillColor: ColorConstant.purple95,
+                    fillColor: ColorConstant.green95,
                     filled: true,
                     hintText: 'メッセージを入力',
                     floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -65,7 +65,7 @@ class TalkPage extends StatelessWidget {
               Spacer(),
               Icon(
                 Icons.send,
-                color: ColorConstant.purple40,
+                color: ColorConstant.green40,
               ),
             ],
           ),

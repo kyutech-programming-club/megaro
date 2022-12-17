@@ -17,7 +17,7 @@ class AppBarDateNotifier extends StateNotifier<DateTime> {
         return Theme(
             data: ThemeData.light().copyWith(
               colorScheme: ColorScheme.light().copyWith(
-                primary: ColorConstant.purple40,
+                primary: ColorConstant.green40,
               ),
             ),
             child: child!);

@@ -32,12 +32,12 @@ class Modal extends ConsumerWidget {
               decoration: InputDecoration(
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
-                    color: ColorConstant.purple40,
+                    color: ColorConstant.green40,
                   ),
                 ),
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
-                    color: ColorConstant.purple40,
+                    color: ColorConstant.green40,
                   ),
                 ),
               ),
@@ -85,7 +85,7 @@ class Modal extends ConsumerWidget {
                   child: ElevatedButton(
                     child: Text(context.l10n.save),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: ColorConstant.purple40,
+                      backgroundColor: ColorConstant.green40,
                       foregroundColor: ColorConstant.black100,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
