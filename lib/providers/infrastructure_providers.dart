@@ -8,9 +8,6 @@ import 'package:flutter_template/repositories/example_repository.dart';
 import 'package:flutter_template/repositories/location_repository.dart';
 import 'package:location/location.dart';
 
-import '../documents/chat_document/chat_document.dart';
-import 'domain_providers.dart';
-
 /// Firestoreのインスタンスを保持するプロバイダ
 final firebaseFirestoreProvider = Provider((_) => FirebaseFirestore.instance);
 
@@ -28,8 +25,7 @@ final examplesCollectionRefProvider =
 ///
 
 /// 近くの位置情報
-final nearLocationsStreamProvider =
-    StreamProvider<List<LocationEntity>>((ref) {
+final nearLocationsStreamProvider = StreamProvider<List<LocationEntity>>((ref) {
   return ref.read(locationRepositoryProvider).getNearLocationStream();
 });
 
@@ -39,13 +35,26 @@ final currentLocationStreamProvider = StreamProvider<LocationData>((ref) {
 });
 
 /// チャット
-/*final chatStreamProvider =
-StreamProvider<List<ChatEntity>>((ref) {
-  return ref.read(chatRepositoryProvider).getStreamChat();
-});*/
+final chatMyStreamProvider = StreamProvider<List<ChatEntity>>((ref) {
+  return ref.read(chatRepositoryProvider).getChatMyStream();
+});
+
+/// チャット
+final chatOppStreamProvider = StreamProvider<List<ChatEntity>>((ref) {
+  return ref.read(chatRepositoryProvider).getChatOppStream();
+});
+
+/// チャット
+final chatMyOppStreamProvider = StreamProvider.family<List<ChatEntity>, String>((ref, token) {
+  return ref.read(chatRepositoryProvider).getChatMyOppStream(token);
+});
+
+/// チャット
+final chatOppMyStreamProvider = StreamProvider.family<List<ChatEntity>, String>((ref, token) {
+  return ref.read(chatRepositoryProvider).getChatOppMyStream(token);
+});
 
 final StreamProvider<List<ExampleEntity>> examplesStreamProvider =
     StreamProvider<List<ExampleEntity>>((ref) {
   return ref.read(exampleRepositoryProvider).getExampleStream();
 });
-

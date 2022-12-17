@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/documents/example_document/example_document.dart';
 import 'package:flutter_template/documents/location_document/location_document.dart';
@@ -48,14 +47,12 @@ class FirestoreDataSource {
       "name": locationJson['name'],
       "position": positionJson,
     });
-
   }
 
   Stream<List<LocationDocument>> fetchNearLocation() {
     final db = FirebaseFirestore.instance;
     final geo = Geoflutterfire();
-    GeoFirePoint center =
-        geo.point(latitude: 35, longitude: 135);
+    GeoFirePoint center = geo.point(latitude: 35, longitude: 135);
 
     var collectionReference = db.collection('shop');
 
@@ -101,19 +98,7 @@ class FirestoreDataSource {
     await collectionReferences.get(const GetOptions(source: Source.server));
   }
 
-  Future<void> a() async{
-    final db = FirebaseFirestore.instance;
-    final userToken = ref.read(tokenProvider);
-
-    final stream = await db
-        .collection('chat')
-        .orderBy('updateAt', descending: true)
-        .where('myToken', isEqualTo: '$userToken')
-        .limit(20)
-        .get(const GetOptions(source: Source.cache));
-  }
-
-  Stream<QuerySnapshot<Map<String, dynamic>>> getStreamChat() {
+  Stream<List<ChatDocument>> getStreamMyChat() {
     final userToken = ref.read(tokenProvider);
     final db = FirebaseFirestore.instance;
 
@@ -122,7 +107,60 @@ class FirestoreDataSource {
         .orderBy('updateAt', descending: true)
         .where('myToken', isEqualTo: '$userToken')
         .limit(20)
-    .snapshots();
-    return stream;
+        .snapshots();
+    return stream.map((event) => event.docs
+        .map((doc) => doc.data())
+        .map((data) => ChatDocument.fromJson(data))
+        .toList());
+  }
+
+  Stream<List<ChatDocument>> getStreamOppChat() {
+    final userToken = ref.read(tokenProvider);
+    final db = FirebaseFirestore.instance;
+
+    final stream = db
+        .collection('chat')
+        .orderBy('updateAt', descending: true)
+        .where('oppToken', isEqualTo: '$userToken')
+        .limit(20)
+        .snapshots();
+    return stream.map((event) => event.docs
+        .map((doc) => doc.data())
+        .map((data) => ChatDocument.fromJson(data))
+        .toList());
+  }
+
+  Stream<List<ChatDocument>> getStreamMyOppChat(String oppToken) {
+    final userToken = ref.read(tokenProvider);
+    final db = FirebaseFirestore.instance;
+
+    final stream = db
+        .collection('chat')
+        .orderBy('updateAt', descending: true)
+        .where('myToken', isEqualTo: userToken)
+        .where('oppToken', isEqualTo: oppToken)
+        .limit(20)
+        .snapshots();
+    return stream.map((event) => event.docs
+        .map((doc) => doc.data())
+        .map((data) => ChatDocument.fromJson(data))
+        .toList());
+  }
+
+  Stream<List<ChatDocument>> getStreamOppMyChat(String oppToken) {
+    final userToken = ref.read(tokenProvider);
+    final db = FirebaseFirestore.instance;
+
+    final stream = db
+        .collection('chat')
+        .orderBy('updateAt', descending: true)
+        .where('oppToken', isEqualTo: '$userToken')
+        .where('myToken', isEqualTo: oppToken)
+        .limit(20)
+        .snapshots();
+    return stream.map((event) => event.docs
+        .map((doc) => doc.data())
+        .map((data) => ChatDocument.fromJson(data))
+        .toList());
   }
 }
