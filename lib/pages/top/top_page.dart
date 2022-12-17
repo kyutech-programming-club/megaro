@@ -14,6 +14,7 @@ class TopPage extends ConsumerWidget {
     final location = ref.watch(currentLocationStreamProvider);
     final battery = ref.watch(batteryProvider);
     final mapIcon = ref.watch(mapIconProvider);
+    final isRental = ref.watch(isRentalProvider);
     Set<Marker> markers = Set();
 
     markers.add(
@@ -38,6 +39,17 @@ class TopPage extends ConsumerWidget {
               Builder(builder: (context) {
                 return location.when(
                   data: (loc) {
+                    markers.add(
+                        Marker( //add start location marker
+                          markerId: MarkerId("marker_2"),
+                          position: LatLng(loc.latitude!, loc.longitude!),//position of marker
+                          infoWindow: InfoWindow( //popup info
+                            title: 'Starting Point ',
+                            snippet: 'Start Marker',
+                          ),
+                          icon: BitmapDescriptor.fromBytes(mapIcon), //Icon for Marker
+                        )
+                    );
                     final CameraPosition _kGooglePlex = CameraPosition(
                       target: LatLng(
                           loc.latitude!.toDouble(), loc.longitude!.toDouble()),
@@ -125,12 +137,12 @@ class TopPage extends ConsumerWidget {
               Positioned(
                 bottom: 24,
                 left: 16,
-                child: Text(
+                child: isRental ? Text(
                   '貸し出し中',
                   style: TextStyle(
                     fontSize: 24,
                   ),
-                ),
+                ) : SizedBox.shrink()
               ),
             ],
           ),
