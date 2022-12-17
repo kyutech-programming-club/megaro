@@ -58,22 +58,10 @@ class _MyAppState extends ConsumerState<MyApp> {
       ref.read(mapIconProvider.notifier).update((state) => markerIcon);
       final token = await FirebaseMessaging.instance.getToken();
       ref.read(tokenProvider.notifier).update((state) => token!);
+      await ref.read(firestoreProvider).loadChat();
       setState(() {});
     });
     super.initState();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    Future(() async{
-      final token = await FirebaseMessaging.instance.getToken();
-      ref.read(tokenProvider.notifier).update((state) => token!);
-      await ref.read(firestoreProvider).loadChat();
-      setState(() {
-
-      });
-    });
   }
 
   @override
