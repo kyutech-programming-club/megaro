@@ -17,6 +17,10 @@ final router = GoRouter(
       ],
     ),
     GoRoute(
+      path: '/message_page/:',
+      builder: (context, state) => const MessagePage(),
+    ),
+    GoRoute(
       path: '/setting',
       builder: (context, state) => const SettingPage(),
     ),
