@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_template/constants/color_constant.dart';
 import 'package:flutter_template/entity/message/message_entity.dart';
-import 'package:flutter_template/pages/message/children/receive_message.dart';
-import 'package:flutter_template/pages/message/children/send_message.dart';
+import 'package:flutter_template/pages/message/children/receive_message_bubble.dart';
+import 'package:flutter_template/pages/message/children/send_message_bubble.dart';
 
 class TalkPage extends StatelessWidget {
   const TalkPage({Key? key}) : super(key: key);
@@ -29,10 +29,10 @@ class TalkPage extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               final message=messages[index];
               if (message.isMy){
-                return SendMessage(message: message.text);
+                return SendMessageBubble(message: message.text);
               }
               else {
-                return ReceiveMessage(message: message.text);
+                return ReceiveMessageBubble(message: message.text);
               }
             },
           ),

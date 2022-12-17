@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_template/constants/color_constant.dart';
 
-class SendMessage extends StatelessWidget {
-  const SendMessage({Key? key, required this.message}) : super(key: key);
+class SendMessageBubble extends StatelessWidget {
+  const SendMessageBubble({Key? key, required this.message}) : super(key: key);
   final String message;
   @override
   Widget build(BuildContext context) {

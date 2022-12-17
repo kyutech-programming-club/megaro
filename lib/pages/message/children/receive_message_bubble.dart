@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_template/constants/color_constant.dart';
 
-class ReceiveMessage extends StatelessWidget {
-  const ReceiveMessage({Key? key, required this.message}) : super(key: key);
+class ReceiveMessageBubble extends StatelessWidget {
+  const ReceiveMessageBubble({Key? key, required this.message}) : super(key: key);
   final String message;
 
   @override
