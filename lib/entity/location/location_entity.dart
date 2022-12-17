@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_template/documents/location_document/location_document.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'location_entity.freezed.dart';
@@ -14,12 +14,12 @@ class LocationEntity with _$LocationEntity {
     required double long,
   }) = _LocationEntity;
 
-  static Future<LocationEntity> createEntity(WidgetRef ref) async {
+  static LocationEntity fromDoc(LocationDocument locationDocument) {
     return LocationEntity(
-      name: '',
-      hash: '',
-      lat: 0,
-      long: 0,
+      name: locationDocument.name,
+      hash: locationDocument.position.geoHash,
+      lat: locationDocument.position.geoPoint.latitude,
+      long: locationDocument.position.geoPoint.longitude,
     );
   }
 }

@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/documents/example_document/example_document.dart';
 import 'package:flutter_template/documents/location_document/location_document.dart';
 import 'package:flutter_template/providers/infrastructure_providers.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:location/location.dart';
 
 final firestoreProvider = Provider<FirestoreDataSource>((ref) =>
     FirestoreDataSource(
@@ -35,5 +37,23 @@ class FirestoreDataSource {
 
   Future<void> insertLocation(LocationDocument locationDocument) async {
     await collectionRef.add(locationDocument.toJson());
+  }
+
+  Stream<List<LocationDocument>> fetchNearLocation(LocationData locData) {
+    final db = FirebaseFirestore.instance;
+    final geo = Geoflutterfire();
+    GeoFirePoint center =
+        geo.point(latitude: locData.latitude!, longitude: locData.longitude!);
+
+    var collectionReference = db.collection('shop');
+
+    double radius = 10000;
+    String field = 'position';
+
+    return geo
+        .collection(collectionRef: collectionReference)
+        .within(center: center, radius: radius, field: field, strictMode: true)
+        .map((event) =>
+            event.map((e) => LocationDocument.fromJson(e.data()!)).toList());
   }
 }
