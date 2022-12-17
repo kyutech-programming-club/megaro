@@ -6,7 +6,6 @@ import 'package:flutter_template/documents/location_document/location_document.d
 import 'package:flutter_template/providers/domain_providers.dart';
 import 'package:flutter_template/providers/infrastructure_providers.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
-import 'package:location/location.dart';
 
 import '../documents/chat_document/chat_document.dart';
 
@@ -40,14 +39,23 @@ class FirestoreDataSource {
   ///
 
   Future<void> insertLocation(LocationDocument locationDocument) async {
-    await collectionRef.add(locationDocument.toJson());
+    final db = FirebaseFirestore.instance;
+    final collectionReference = db.collection('shop');
+    final positionJson = locationDocument.position.toJson();
+    final locationJson = locationDocument.toJson();
+    /// Todo
+    await collectionReference.doc(locationDocument.name).set({
+      "name": locationJson['name'],
+      "position": positionJson,
+    });
+
   }
 
-  Stream<List<LocationDocument>> fetchNearLocation(LocationData locData) {
+  Stream<List<LocationDocument>> fetchNearLocation() {
     final db = FirebaseFirestore.instance;
     final geo = Geoflutterfire();
     GeoFirePoint center =
-        geo.point(latitude: locData.latitude!, longitude: locData.longitude!);
+        geo.point(latitude: 35, longitude: 135);
 
     var collectionReference = db.collection('shop');
 

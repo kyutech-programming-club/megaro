@@ -23,9 +23,9 @@ class SettingRepository {
     final value = await ref.read(preferencesProvider).getInt(PrefKey.example.name);
     if (value == null) {
       await ref.read(preferencesProvider).setInt(key, 0);
+      return;
     }
-    print(value);
-    await ref.read(preferencesProvider).setInt(key, value! + 1);
+    await ref.read(preferencesProvider).setInt(key, value + 1);
   }
 
   ///

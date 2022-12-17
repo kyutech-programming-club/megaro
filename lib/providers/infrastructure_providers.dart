@@ -29,8 +29,8 @@ final examplesCollectionRefProvider =
 
 /// 近くの位置情報
 final nearLocationsStreamProvider =
-    StreamProvider.family<List<LocationEntity>, LocationData>((ref, locData) {
-  return ref.read(locationRepositoryProvider).getNearLocationStream(locData);
+    StreamProvider<List<LocationEntity>>((ref) {
+  return ref.read(locationRepositoryProvider).getNearLocationStream();
 });
 
 /// 現在地

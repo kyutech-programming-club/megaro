@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_template/constants/color_constant.dart';
+import 'package:go_router/go_router.dart';
 
 class MessagePage extends StatelessWidget {
   const MessagePage({Key? key}) : super(key: key);
@@ -22,6 +23,7 @@ class MessagePage extends StatelessWidget {
             itemCount: 6,
             itemBuilder: (BuildContext context, int index){
               return ListTile(
+                onTap: () => context.push('/message_page/talk_page/:'),
                 leading: CircleAvatar(),
                 trailing: Text('21:06'),
                 title: Text('aaa'),

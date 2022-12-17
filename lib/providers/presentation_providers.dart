@@ -44,3 +44,5 @@ final isSettingGetupTimeProvider = StateProvider<bool>((ref) => false);
 final isNotificationProvider = StateNotifierProvider.family<IsNotificationNotifier, bool, String>(
       (ref, String key) => IsNotificationNotifier(ref, key),
 );
+
+final isRentalProvider = StateProvider<bool>((ref) => true);

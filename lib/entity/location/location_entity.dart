@@ -1,5 +1,6 @@
 import 'package:flutter_template/documents/location_document/location_document.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
 
 part 'location_entity.freezed.dart';
 
@@ -20,6 +21,15 @@ class LocationEntity with _$LocationEntity {
       hash: locationDocument.position.geoHash,
       lat: locationDocument.position.geoPoint.latitude,
       long: locationDocument.position.geoPoint.longitude,
+    );
+  }
+
+  static LocationEntity fromGeoPoint(String token, GeoFirePoint geoPoint) {
+    return LocationEntity(
+      name: token,
+      hash: geoPoint.hash,
+      lat: geoPoint.latitude,
+      long: geoPoint.longitude,
     );
   }
 }
