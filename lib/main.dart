@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,6 +9,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_template/constants/color_constant.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_template/providers/domain_providers.dart';
 import 'package:flutter_template/utils/router.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -38,6 +41,23 @@ class _MyAppState extends ConsumerState<MyApp> {
         'This channel is used for important notifications.', // description
     importance: Importance.high,
   );
+
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+  }
+
+  @override
+  void initState() {
+    Future(() async {
+      final Uint8List markerIcon = await getBytesFromAsset('assets/images/user_icon.png', 100);
+      ref.read(mapIconProvider.notifier).update((state) => markerIcon);
+      setState(() {});
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

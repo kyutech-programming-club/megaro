@@ -13,6 +13,20 @@ class TopPage extends ConsumerWidget {
     final _controller = ref.watch(googleMapProvider);
     final location = ref.watch(currentLocationStreamProvider);
     final battery = ref.watch(batteryProvider);
+    final mapIcon = ref.watch(mapIconProvider);
+    Set<Marker> markers = Set();
+
+    markers.add(
+        Marker( //add start location marker
+          markerId: MarkerId("marker_2"),
+          position: LatLng(37.77493, -122.419416),//position of marker
+          infoWindow: InfoWindow( //popup info
+            title: 'Starting Point ',
+            snippet: 'Start Marker',
+          ),
+          icon: BitmapDescriptor.fromBytes(mapIcon!), //Icon for Marker
+        )
+    );
 
     return Scaffold(
       body: SafeArea(
@@ -27,12 +41,13 @@ class TopPage extends ConsumerWidget {
                     final CameraPosition _kGooglePlex = CameraPosition(
                       target: LatLng(
                           loc.latitude!.toDouble(), loc.longitude!.toDouble()),
-                      zoom: 10,
+                      zoom: 5,
                     );
                     return GoogleMap(
                       mapType: MapType.normal,
                       initialCameraPosition: _kGooglePlex,
-                      //markers: _markers,
+                      myLocationButtonEnabled: true,
+                      markers: markers,
                       //polylines: _lines,
                       onMapCreated: (GoogleMapController controller) {
                         _controller.complete(controller);
@@ -87,12 +102,6 @@ class TopPage extends ConsumerWidget {
                         },
                       );
                     }),
-                    Text(
-                      '共有まで12%',
-                      style: TextStyle(
-                        fontSize: 24,
-                      ),
-                    ),
                   ],
                 ),
               ),
