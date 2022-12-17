@@ -13,6 +13,21 @@ class TopPage extends ConsumerWidget {
     final _controller = ref.watch(googleMapProvider);
     final location = ref.watch(currentLocationStreamProvider);
     final battery = ref.watch(batteryProvider);
+    final mapIcon = ref.watch(mapIconProvider);
+    final isRental = ref.watch(isRentalProvider);
+    Set<Marker> markers = Set();
+
+    markers.add(
+        Marker( //add start location marker
+          markerId: MarkerId("marker_2"),
+          position: LatLng(37.77493, -122.419416),//position of marker
+          infoWindow: InfoWindow( //popup info
+            title: 'Starting Point ',
+            snippet: 'Start Marker',
+          ),
+          icon: BitmapDescriptor.fromBytes(mapIcon!), //Icon for Marker
+        )
+    );
 
     return Scaffold(
       body: SafeArea(
@@ -24,15 +39,27 @@ class TopPage extends ConsumerWidget {
               Builder(builder: (context) {
                 return location.when(
                   data: (loc) {
+                    markers.add(
+                        Marker( //add start location marker
+                          markerId: MarkerId("marker_2"),
+                          position: LatLng(loc.latitude!, loc.longitude!),//position of marker
+                          infoWindow: InfoWindow( //popup info
+                            title: 'Starting Point ',
+                            snippet: 'Start Marker',
+                          ),
+                          icon: BitmapDescriptor.fromBytes(mapIcon), //Icon for Marker
+                        )
+                    );
                     final CameraPosition _kGooglePlex = CameraPosition(
                       target: LatLng(
                           loc.latitude!.toDouble(), loc.longitude!.toDouble()),
-                      zoom: 10,
+                      zoom: 5,
                     );
                     return GoogleMap(
                       mapType: MapType.normal,
                       initialCameraPosition: _kGooglePlex,
-                      //markers: _markers,
+                      myLocationButtonEnabled: true,
+                      markers: markers,
                       //polylines: _lines,
                       onMapCreated: (GoogleMapController controller) {
                         _controller.complete(controller);
@@ -58,11 +85,21 @@ class TopPage extends ConsumerWidget {
                     Builder(builder: (context) {
                       return battery.when(
                         data: (data) {
-                          return Text(
-                            '${data.toString()}%',
-                            style: TextStyle(
-                              fontSize: 56,
-                            ),
+                          return Column(
+                            children: [
+                              Text(
+                                '${data.toString()}%',
+                                style: TextStyle(
+                                  fontSize: 56,
+                                ),
+                              ),
+                              Text(
+                                '共有できるまで${data - 5}%',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                ),
+                              ),
+                            ],
                           );
                         },
                         error: (error, stackTrace) {
@@ -77,12 +114,6 @@ class TopPage extends ConsumerWidget {
                         },
                       );
                     }),
-                    Text(
-                      '共有まで12%',
-                      style: TextStyle(
-                        fontSize: 24,
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -106,12 +137,12 @@ class TopPage extends ConsumerWidget {
               Positioned(
                 bottom: 24,
                 left: 16,
-                child: Text(
+                child: isRental ? Text(
                   '貸し出し中',
                   style: TextStyle(
                     fontSize: 24,
                   ),
-                ),
+                ) : SizedBox.shrink()
               ),
             ],
           ),
