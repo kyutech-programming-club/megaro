@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_template/entity/location/location_entity.dart';
 import 'package:flutter_template/components/float_button.dart';
 import 'package:flutter_template/providers/domain_providers.dart';
 import 'package:flutter_template/providers/infrastructure_providers.dart';
 import 'package:flutter_template/providers/presentation_providers.dart';
+import 'package:flutter_template/repositories/location_repository.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class TopPage extends ConsumerWidget {
@@ -16,19 +18,9 @@ class TopPage extends ConsumerWidget {
     final battery = ref.watch(batteryProvider);
     final mapIcon = ref.watch(mapIconProvider);
     final isRental = ref.watch(isRentalProvider);
+    final token = ref.watch(tokenProvider);
+    final geo = ref.watch(geoProvider);
     Set<Marker> markers = Set();
-
-    markers.add(
-        Marker( //add start location marker
-          markerId: MarkerId("marker_2"),
-          position: LatLng(37.77493, -122.419416),//position of marker
-          infoWindow: InfoWindow( //popup info
-            title: 'Starting Point ',
-            snippet: 'Start Marker',
-          ),
-          icon: BitmapDescriptor.fromBytes(mapIcon!), //Icon for Marker
-        )
-    );
 
     return Scaffold(
       floatingActionButton: MessageButton(),
@@ -41,16 +33,24 @@ class TopPage extends ConsumerWidget {
               Builder(builder: (context) {
                 return location.when(
                   data: (loc) {
-                    markers.add(
-                        Marker( //add start location marker
-                          markerId: MarkerId("marker_2"),
-                          position: LatLng(loc.latitude!, loc.longitude!),//position of marker
-                          infoWindow: InfoWindow( //popup info
-                            title: 'Starting Point ',
-                            snippet: 'Start Marker',
+                    ref.read(locationRepositoryProvider).addLocation(
+                          LocationEntity.fromGeoPoint(
+                            token,
+                            geo.point(
+                                latitude: loc.latitude!,
+                                longitude: loc.longitude!),
                           ),
-                          icon: BitmapDescriptor.fromBytes(mapIcon), //Icon for Marker
-                        )
+                        );
+                    markers.add(
+                      Marker(
+                        markerId: MarkerId("marker_2"),
+                        position: LatLng(loc.latitude!, loc.longitude!),
+                        infoWindow: InfoWindow(
+                          title: 'Starting Point ',
+                          snippet: 'Start Marker',
+                        ),
+                        icon: BitmapDescriptor.fromBytes(mapIcon!),
+                      ),
                     );
                     final CameraPosition _kGooglePlex = CameraPosition(
                       target: LatLng(
