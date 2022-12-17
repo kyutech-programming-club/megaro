@@ -52,7 +52,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     Future(() async {
-      final Uint8List markerIcon = await getBytesFromAsset('assets/images/user_icon.png', 100);
+      final Uint8List markerIcon = await getBytesFromAsset('assets/images/user_icon.png', 240);
       ref.read(mapIconProvider.notifier).update((state) => markerIcon);
       setState(() {});
     });
