@@ -12,6 +12,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_template/providers/domain_providers.dart';
 import 'package:flutter_template/utils/router.dart';
 
+import 'data/firestore_data_source.dart';
+
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   print("バックグラウンドでメッセージを受け取りました");
@@ -59,6 +61,19 @@ class _MyAppState extends ConsumerState<MyApp> {
       setState(() {});
     });
     super.initState();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future(() async{
+      final token = await FirebaseMessaging.instance.getToken();
+      ref.read(tokenProvider.notifier).update((state) => token!);
+      await ref.read(firestoreProvider).loadChat();
+      setState(() {
+
+      });
+    });
   }
 
   @override
