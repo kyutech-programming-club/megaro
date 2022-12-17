@@ -103,11 +103,6 @@ class FirestoreDataSource {
         .where('myToken', isEqualTo: '$userToken')
         .limit(20)
         .get(const GetOptions(source: Source.cache));
-    print("ストリーム ${stream.docs.length}");
-    //print("ストリーム ${stream.docs.length}");
-    //final streams = db.namedQueryGet("message", options: const GetOptions(source: Source.cache));
-
-    //print("死ぬ ${streams.sna}");
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getStreamChat() {
@@ -120,8 +115,6 @@ class FirestoreDataSource {
         .where('myToken', isEqualTo: '$userToken')
         .limit(20)
     .snapshots();
-
-    print("ながさああああああああああああああ ${stream}");
     return stream;
   }
 }

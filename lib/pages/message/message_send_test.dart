@@ -46,23 +46,6 @@ class MessageSendTestPage extends ConsumerWidget {
           },
         ),
       ),
-      /*ElevatedButton(
-        onPressed: () async {
-          ref.read(chatRepositoryProvider).receiveChat();
-           userToken = await _firebaseMessaging.getToken();
-          ref.read(chatRepositoryProvider).addChat(
-              ChatEntity(
-                  myToken: userToken!,
-                  opponentToken: '',
-                  message: 'a',
-                  unread: 0,
-                  updateAt: DateTime.now()
-              ));*/ /*
-        },
-        child: Container(
-          color: Colors.blueGrey,
-        ),
-      ),*/
       floatingActionButton: FloatingActionButton(
         onPressed: () async{
           FirebaseMessaging messaging = FirebaseMessaging.instance;
