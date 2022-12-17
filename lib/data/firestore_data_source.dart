@@ -36,7 +36,16 @@ class FirestoreDataSource {
   ///
 
   Future<void> insertLocation(LocationDocument locationDocument) async {
-    await collectionRef.add(locationDocument.toJson());
+    final db = FirebaseFirestore.instance;
+    final collectionReference = db.collection('shop');
+    final positionJson = locationDocument.position.toJson();
+    final locationJson = locationDocument.toJson();
+    /// Todo
+    await collectionReference.doc(locationDocument.name).set({
+      "name": locationJson['name'],
+      "position": positionJson,
+    });
+
   }
 
   Stream<List<LocationDocument>> fetchNearLocation(LocationData locData) {
