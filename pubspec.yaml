@@ -75,6 +75,9 @@ flutter:
 
   generate: true
 
+  assets:
+    - assets/images/
+
   fonts:
    - family: NotoSans
      fonts:
