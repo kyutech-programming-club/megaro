@@ -47,7 +47,7 @@ class TopPage extends ConsumerWidget {
                               title: 'Starting Point ',
                               snippet: 'Start Marker',
                             ),
-                            icon: BitmapDescriptor.fromBytes(mapIcon), //Icon for Marker
+                            icon: BitmapDescriptor.fromBytes(mapIcon!), //Icon for Marker
                           )
                       );
                     }
