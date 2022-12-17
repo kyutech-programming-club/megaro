@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/providers/domain_providers.dart';
 import 'package:flutter_template/providers/presentation_providers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../../../providers/infrastructure_providers.dart';
 
 class TestPage extends ConsumerWidget {
   const TestPage({Key? key}) : super(key: key);

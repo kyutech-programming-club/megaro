@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/components/appbar/appbar_notifier.dart';
 import 'package:flutter_template/pages/setting/children/notification/notification_notifier.dart';
+import 'package:battery_plus/battery_plus.dart';
 
 ///
 /// appbar
@@ -24,6 +25,9 @@ final exampleTextFieldProvider = StateProvider<String>((ref) => '');
 
 /// スライダーの状態
 final sliderValueProvider = StateProvider<int>((_) => 0);
+
+///バッテリーの充電量
+final batteryProvider = FutureProvider((ref) async => await Battery().batteryLevel);
 
 ///
 /// top

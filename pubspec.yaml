@@ -58,6 +58,7 @@ dependencies:
   flutter_platform_widgets: ^2.0.0
   location: ^4.4.0
   google_maps_flutter: ^2.2.2
+  battery_plus: ^3.0.2
 
 
 dev_dependencies:
