@@ -21,12 +21,13 @@ class LocationDocument with _$LocationDocument {
   factory LocationDocument.fromJson(Map<String, dynamic> json) =>
       _$LocationDocumentFromJson(json);
 
-  static Future<LocationDocument> createDocument(LocationEntity locationEntity, Ref ref) async {
+  static Future<LocationDocument> createDocument(
+      LocationEntity locationEntity, Ref ref) async {
     return LocationDocument(
       name: locationEntity.name,
       position: PositionDocument(
-          geoHash: locationEntity.hash,
-          geoPoint: GeoPoint(locationEntity.lat, locationEntity.long)
+        geoHash: locationEntity.hash,
+        geoPoint: GeoPoint(locationEntity.lat, locationEntity.long),
       ),
     );
   }

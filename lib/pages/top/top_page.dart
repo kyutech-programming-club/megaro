@@ -17,19 +17,8 @@ class TopPage extends ConsumerWidget {
     final battery = ref.watch(batteryProvider);
     final mapIcon = ref.watch(mapIconProvider);
     final isRental = ref.watch(isRentalProvider);
+    final nearLoc = ref.watch(nearLocationsStreamProvider);
     Set<Marker> markers = Set();
-
-    markers.add(
-        Marker( //add start location marker
-          markerId: MarkerId("marker_2"),
-          position: LatLng(37.77493, -122.419416),//position of marker
-          infoWindow: InfoWindow( //popup info
-            title: 'Starting Point ',
-            snippet: 'Start Marker',
-          ),
-          icon: BitmapDescriptor.fromBytes(mapIcon!), //Icon for Marker
-        )
-    );
 
     return Scaffold(
       floatingActionButton: MessageButton(),
@@ -40,19 +29,23 @@ class TopPage extends ConsumerWidget {
           child: Stack(
             children: [
               Builder(builder: (context) {
-                return location.when(
-                  data: (loc) {
-                    markers.add(
-                        Marker( //add start location marker
-                          markerId: MarkerId("marker_2"),
-                          position: LatLng(loc.latitude!, loc.longitude!),//position of marker
-                          infoWindow: InfoWindow( //popup info
-                            title: 'Starting Point ',
-                            snippet: 'Start Marker',
-                          ),
-                          icon: BitmapDescriptor.fromBytes(mapIcon), //Icon for Marker
-                        )
-                    );
+                return nearLoc.when(
+                  data: (locs) {
+                    print("length: ${locs.length}");
+                    for (var i = 0; i < locs.length; i++) {
+                      final loc = locs[i];
+                      markers.add(
+                          Marker( //add start location marker
+                            markerId: MarkerId(loc.name),
+                            position: LatLng(loc.lat, loc.long),//position of marker
+                            infoWindow: InfoWindow( //popup info
+                              title: 'Starting Point ',
+                              snippet: 'Start Marker',
+                            ),
+                            icon: BitmapDescriptor.fromBytes(mapIcon!), //Icon for Marker
+                          )
+                      );
+                    }
                     final CameraPosition _kGooglePlex = CameraPosition(
                       target: LatLng(
                           loc.latitude!.toDouble(), loc.longitude!.toDouble()),
@@ -61,6 +54,7 @@ class TopPage extends ConsumerWidget {
                     return GoogleMap(
                       mapType: MapType.normal,
                       initialCameraPosition: _kGooglePlex,
+                      myLocationEnabled: true,
                       myLocationButtonEnabled: true,
                       markers: markers,
                       //polylines: _lines,

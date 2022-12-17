@@ -9,8 +9,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_template/constants/color_constant.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_template/entity/location/location_entity.dart';
 import 'package:flutter_template/providers/domain_providers.dart';
+import 'package:flutter_template/providers/infrastructure_providers.dart';
+import 'package:flutter_template/repositories/location_repository.dart';
 import 'package:flutter_template/utils/router.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -44,16 +48,21 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
     ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 
   @override
   void initState() {
     Future(() async {
-      final Uint8List markerIcon = await getBytesFromAsset('assets/images/user_icon.png', 240);
+      final Uint8List markerIcon = await getBytesFromAsset('assets/images/user_icon.png', 240);     
       ref.read(mapIconProvider.notifier).update((state) => markerIcon);
+      final token = await FirebaseMessaging.instance.getToken() ?? "token";
+      ref.read(tokenProvider.notifier).update((state) => token);
       setState(() {});
     });
     super.initState();
@@ -61,6 +70,15 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(currentLocationStreamProvider).whenData((value) {
+      final token = ref.read(tokenProvider);
+      ref.read(locationRepositoryProvider).addLocation(
+            LocationEntity.fromGeoPoint(
+              token,
+              GeoFirePoint(value.latitude!, value.longitude!),
+            ),
+          );
+    });
     return MaterialApp.router(
       localizationsDelegates: [
         AppLocalizations.delegate,
