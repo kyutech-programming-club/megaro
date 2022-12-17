@@ -58,11 +58,21 @@ class TopPage extends ConsumerWidget {
                     Builder(builder: (context) {
                       return battery.when(
                         data: (data) {
-                          return Text(
-                            '${data.toString()}%',
-                            style: TextStyle(
-                              fontSize: 56,
-                            ),
+                          return Column(
+                            children: [
+                              Text(
+                                '${data.toString()}%',
+                                style: TextStyle(
+                                  fontSize: 56,
+                                ),
+                              ),
+                              Text(
+                                '共有できるまで${data - 5}%',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                ),
+                              ),
+                            ],
                           );
                         },
                         error: (error, stackTrace) {
