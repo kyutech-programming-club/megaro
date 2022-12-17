@@ -25,7 +25,7 @@ final router = GoRouter(
     ),
     GoRoute(
       path: '/message_page/talk_page/:',
-      builder: (context, state) => const TalkPage(),
+      builder: (context, state) => TalkPage(oppToken: state.extra as String),
     ),
     GoRoute(
       path: '/setting',
