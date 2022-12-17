@@ -14,7 +14,6 @@ class MessageButton extends ConsumerWidget {
               onPressed: () => context.push('/message_page/:'),
               backgroundColor: ColorConstant.purple40,
               child: Icon(
-
                 Icons.chat_bubble,
                 color: ColorConstant.black100,
               ),
