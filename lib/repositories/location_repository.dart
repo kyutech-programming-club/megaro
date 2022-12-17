@@ -22,9 +22,9 @@ class LocationRepository {
   }
 
   /// 近くのストリームを取得
-  Stream<List<LocationEntity>> getNearLocationStream(LocationData locData) {
+  Stream<List<LocationEntity>> getNearLocationStream() {
     final firestore = ref.read(firestoreProvider);
-    return firestore.fetchNearLocation(locData).map(
+    return firestore.fetchNearLocation().map(
           (event) => event.map((e) => LocationEntity.fromDoc(e)).toList(),
         );
   }

@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/providers/domain_providers.dart';
 import 'package:flutter_template/providers/infrastructure_providers.dart';
 import 'package:flutter_template/providers/presentation_providers.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class TopPage extends ConsumerWidget {
@@ -15,6 +17,7 @@ class TopPage extends ConsumerWidget {
     final battery = ref.watch(batteryProvider);
     final mapIcon = ref.watch(mapIconProvider);
     final isRental = ref.watch(isRentalProvider);
+    final nearLoc = ref.watch(nearLocationsStreamProvider);
     Set<Marker> markers = Set();
 
     markers.add(
@@ -30,6 +33,15 @@ class TopPage extends ConsumerWidget {
     );
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          final geo = Geoflutterfire();
+          GeoFirePoint geoFirePoint = geo.point(latitude: 12.960632, longitude: 77.641603);
+          FirebaseFirestore.instance
+              .collection('shop')
+              .add({'name': 'random name', 'position': geoFirePoint.data});
+        },
+      ),
       body: SafeArea(
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -37,27 +49,31 @@ class TopPage extends ConsumerWidget {
           child: Stack(
             children: [
               Builder(builder: (context) {
-                return location.when(
-                  data: (loc) {
-                    markers.add(
-                        Marker( //add start location marker
-                          markerId: MarkerId("marker_2"),
-                          position: LatLng(loc.latitude!, loc.longitude!),//position of marker
-                          infoWindow: InfoWindow( //popup info
-                            title: 'Starting Point ',
-                            snippet: 'Start Marker',
-                          ),
-                          icon: BitmapDescriptor.fromBytes(mapIcon), //Icon for Marker
-                        )
-                    );
+                return nearLoc.when(
+                  data: (locs) {
+                    print("length: ${locs.length}");
+                    for (var i = 0; i < locs.length; i++) {
+                      final loc = locs[i];
+                      markers.add(
+                          Marker( //add start location marker
+                            markerId: MarkerId(loc.name),
+                            position: LatLng(loc.lat, loc.long),//position of marker
+                            infoWindow: InfoWindow( //popup info
+                              title: 'Starting Point ',
+                              snippet: 'Start Marker',
+                            ),
+                            icon: BitmapDescriptor.fromBytes(mapIcon), //Icon for Marker
+                          )
+                      );
+                    }
                     final CameraPosition _kGooglePlex = CameraPosition(
-                      target: LatLng(
-                          loc.latitude!.toDouble(), loc.longitude!.toDouble()),
+                      target: LatLng(35, 135),
                       zoom: 5,
                     );
                     return GoogleMap(
                       mapType: MapType.normal,
                       initialCameraPosition: _kGooglePlex,
+                      myLocationEnabled: true,
                       myLocationButtonEnabled: true,
                       markers: markers,
                       //polylines: _lines,
