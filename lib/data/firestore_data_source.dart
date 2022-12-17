@@ -6,6 +6,8 @@ import 'package:flutter_template/providers/infrastructure_providers.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:location/location.dart';
 
+import '../documents/chat_document/chat_document.dart';
+
 final firestoreProvider = Provider<FirestoreDataSource>((ref) =>
     FirestoreDataSource(
         ref: ref, collectionRef: ref.watch(examplesCollectionRefProvider)));
@@ -27,7 +29,7 @@ class FirestoreDataSource {
 
   Future<void> deleteExample(int exampleId) async {
     final col =
-        await collectionRef.where('exampleId', isEqualTo: exampleId).get();
+    await collectionRef.where('exampleId', isEqualTo: exampleId).get();
     await collectionRef.doc(col.docs.first.id).delete();
   }
 
@@ -43,7 +45,7 @@ class FirestoreDataSource {
     final db = FirebaseFirestore.instance;
     final geo = Geoflutterfire();
     GeoFirePoint center =
-        geo.point(latitude: locData.latitude!, longitude: locData.longitude!);
+    geo.point(latitude: locData.latitude!, longitude: locData.longitude!);
 
     var collectionReference = db.collection('shop');
 
@@ -54,6 +56,22 @@ class FirestoreDataSource {
         .collection(collectionRef: collectionReference)
         .within(center: center, radius: radius, field: field, strictMode: true)
         .map((event) =>
-            event.map((e) => LocationDocument.fromJson(e.data()!)).toList());
+        event.map((e) => LocationDocument.fromJson(e.data()!)).toList());
+  }
+
+  ///
+  /// chat
+  ///
+  Future<void> insertChat(ChatDocument chatDocument) async {
+    //FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+    //String? userToken = await _firebaseMessaging.getToken();
+    final db = FirebaseFirestore.instance;
+    var collectionReference = db
+        .collection('chat')
+        .doc()
+    ;
+    await collectionReference.set(chatDocument.toJson());
   }
 }
+
+
