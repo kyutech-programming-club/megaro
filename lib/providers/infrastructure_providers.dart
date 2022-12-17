@@ -19,9 +19,9 @@ final examplesCollectionNameProvider = Provider((_) => 'examples');
 
 ///コレクションReferenceのプロバイダ
 final examplesCollectionRefProvider =
-    Provider<CollectionReference<Map<String, dynamic>>>((ref) => ref
-        .watch(firebaseFirestoreProvider)
-        .collection(ref.watch(examplesCollectionNameProvider)));
+Provider<CollectionReference<Map<String, dynamic>>>((ref) => ref
+    .watch(firebaseFirestoreProvider)
+    .collection(ref.watch(examplesCollectionNameProvider)));
 
 ///
 /// Location
@@ -29,7 +29,7 @@ final examplesCollectionRefProvider =
 
 /// 近くの位置情報
 final nearLocationsStreamProvider =
-    StreamProvider<List<LocationEntity>>((ref) {
+StreamProvider<List<LocationEntity>>((ref) {
   return ref.read(locationRepositoryProvider).getNearLocationStream();
 });
 
@@ -45,7 +45,7 @@ StreamProvider<List<ChatEntity>>((ref) {
 });*/
 
 final StreamProvider<List<ExampleEntity>> examplesStreamProvider =
-    StreamProvider<List<ExampleEntity>>((ref) {
+StreamProvider<List<ExampleEntity>>((ref) {
   return ref.read(exampleRepositoryProvider).getExampleStream();
 });
 
