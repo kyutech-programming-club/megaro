@@ -8,7 +8,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_template/constants/color_constant.dart';
 import 'package:flutter_template/providers/domain_providers.dart';
-import 'package:flutter_template/pages/root/children/router.dart';
+import 'package:flutter_template/utils/router.dart';
 import 'package:flutter/services.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
