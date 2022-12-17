@@ -18,12 +18,4 @@ class ChatRepository {
     final chatDoc = await ChatDocument.createDocument(chatEntity, ref);
     await firestore.insertChat(chatDoc);
   }
-
-  /// 投稿受信機能
-  Stream<List<ChatEntity>> getStreamChat() {
-    final firestore = ref.read(firestoreProvider);
-    return firestore
-        .getStreamChat()
-        .map((event) => event.map((e) => ChatEntity.fromDoc(e)).toList());
-  }
 }

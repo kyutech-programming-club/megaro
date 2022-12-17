@@ -104,21 +104,24 @@ class FirestoreDataSource {
         .limit(20)
         .get(const GetOptions(source: Source.cache));
     print("ストリーム ${stream.docs.length}");
+    //print("ストリーム ${stream.docs.length}");
+    //final streams = db.namedQueryGet("message", options: const GetOptions(source: Source.cache));
+
+    //print("死ぬ ${streams.sna}");
   }
 
-  Stream<List<ChatDocument>> getStreamChat() {
-    final db = FirebaseFirestore.instance;
+  Stream<QuerySnapshot<Map<String, dynamic>>> getStreamChat() {
     final userToken = ref.read(tokenProvider);
+    final db = FirebaseFirestore.instance;
 
     final stream = db
         .collection('chat')
         .orderBy('updateAt', descending: true)
         .where('myToken', isEqualTo: '$userToken')
         .limit(20)
-        .get(const GetOptions(source: Source.cache))
-        .asStream();
+    .snapshots();
 
-    return stream.map((event) =>
-        event.docs.map((e) { print('e.data${e.data()}'); return ChatDocument.fromJson(e.data());}).toList());
+    print("ながさああああああああああああああ ${stream}");
+    return stream;
   }
 }

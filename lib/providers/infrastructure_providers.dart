@@ -8,6 +8,9 @@ import 'package:flutter_template/repositories/example_repository.dart';
 import 'package:flutter_template/repositories/location_repository.dart';
 import 'package:location/location.dart';
 
+import '../documents/chat_document/chat_document.dart';
+import 'domain_providers.dart';
+
 /// Firestoreのインスタンスを保持するプロバイダ
 final firebaseFirestoreProvider = Provider((_) => FirebaseFirestore.instance);
 
@@ -36,12 +39,13 @@ final currentLocationStreamProvider = StreamProvider<LocationData>((ref) {
 });
 
 /// チャット
-final chatStreamProvider =
+/*final chatStreamProvider =
 StreamProvider<List<ChatEntity>>((ref) {
   return ref.read(chatRepositoryProvider).getStreamChat();
-});
+});*/
 
 final StreamProvider<List<ExampleEntity>> examplesStreamProvider =
     StreamProvider<List<ExampleEntity>>((ref) {
   return ref.read(exampleRepositoryProvider).getExampleStream();
 });
+
