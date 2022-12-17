@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_template/components/float_button.dart';
 import 'package:flutter_template/providers/domain_providers.dart';
 import 'package:flutter_template/providers/infrastructure_providers.dart';
 import 'package:flutter_template/providers/presentation_providers.dart';
@@ -33,15 +34,7 @@ class TopPage extends ConsumerWidget {
     );
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          final geo = Geoflutterfire();
-          GeoFirePoint geoFirePoint = geo.point(latitude: 12.960632, longitude: 77.641603);
-          FirebaseFirestore.instance
-              .collection('shop')
-              .add({'name': 'random name', 'position': geoFirePoint.data});
-        },
-      ),
+      floatingActionButton: MessageButton(),
       body: SafeArea(
         child: Container(
           width: MediaQuery.of(context).size.width,
