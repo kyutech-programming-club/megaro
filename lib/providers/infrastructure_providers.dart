@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_template/entity/chat/chat_entity.dart';
 import 'package:flutter_template/entity/example/example_entity.dart';
 import 'package:flutter_template/entity/location/location_entity.dart';
+import 'package:flutter_template/repositories/chat_repository.dart';
 import 'package:flutter_template/repositories/example_repository.dart';
 import 'package:flutter_template/repositories/location_repository.dart';
 import 'package:location/location.dart';
@@ -31,6 +33,12 @@ final nearLocationsStreamProvider =
 /// 現在地
 final currentLocationStreamProvider = StreamProvider<LocationData>((ref) {
   return ref.read(locationRepositoryProvider).getCurrentLocationStream();
+});
+
+/// チャット
+final chatStreamProvider =
+StreamProvider<List<ChatEntity>>((ref) {
+  return ref.read(chatRepositoryProvider).getStreamChat();
 });
 
 final StreamProvider<List<ExampleEntity>> examplesStreamProvider =

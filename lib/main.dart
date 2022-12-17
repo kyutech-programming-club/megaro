@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_template/constants/color_constant.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_template/providers/domain_providers.dart';
 import 'package:flutter_template/utils/router.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -38,6 +39,18 @@ class _MyAppState extends ConsumerState<MyApp> {
         'This channel is used for important notifications.', // description
     importance: Importance.high,
   );
+
+  @override
+  void initState() {
+    super.initState();
+    Future(() async{
+      final token = await FirebaseMessaging.instance.getToken();
+      ref.read(tokenProvider.notifier).update((state) => token!);
+      setState(() {
+
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

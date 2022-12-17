@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/documents/example_document/example_document.dart';
 import 'package:flutter_template/documents/location_document/location_document.dart';
+import 'package:flutter_template/providers/domain_providers.dart';
 import 'package:flutter_template/providers/infrastructure_providers.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:location/location.dart';
@@ -29,7 +31,7 @@ class FirestoreDataSource {
 
   Future<void> deleteExample(int exampleId) async {
     final col =
-    await collectionRef.where('exampleId', isEqualTo: exampleId).get();
+        await collectionRef.where('exampleId', isEqualTo: exampleId).get();
     await collectionRef.doc(col.docs.first.id).delete();
   }
 
@@ -45,7 +47,7 @@ class FirestoreDataSource {
     final db = FirebaseFirestore.instance;
     final geo = Geoflutterfire();
     GeoFirePoint center =
-    geo.point(latitude: locData.latitude!, longitude: locData.longitude!);
+        geo.point(latitude: locData.latitude!, longitude: locData.longitude!);
 
     var collectionReference = db.collection('shop');
 
@@ -56,22 +58,67 @@ class FirestoreDataSource {
         .collection(collectionRef: collectionReference)
         .within(center: center, radius: radius, field: field, strictMode: true)
         .map((event) =>
-        event.map((e) => LocationDocument.fromJson(e.data()!)).toList());
+            event.map((e) => LocationDocument.fromJson(e.data()!)).toList());
   }
 
   ///
   /// chat
   ///
   Future<void> insertChat(ChatDocument chatDocument) async {
-    //FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-    //String? userToken = await _firebaseMessaging.getToken();
     final db = FirebaseFirestore.instance;
-    var collectionReference = db
-        .collection('chat')
-        .doc()
-    ;
+    final collectionReference = db.collection('chat').doc();
     await collectionReference.set(chatDocument.toJson());
   }
+
+  Future<void> loadChat() async {
+    final userToken = ref.read(tokenProvider);
+    final db = FirebaseFirestore.instance;
+    DateTime lastFetchTime = DateTime.now();
+
+    /// cacheから一番古いチャットログを取る
+    final lastTimeCol = await db
+        .collection('chat')
+        .orderBy('updateAt', descending: true)
+        .where('myToken', isEqualTo: '$userToken')
+        .limit(1)
+        .get(const GetOptions(source: Source.cache));
+    lastFetchTime = lastTimeCol.docs.first.data()['updateAt'].toDate();
+
+    /// 一番古いチャットログからそれ以降のログをFirestoreから取る
+    final collectionReferences = db
+        .collection('chat')
+        .where('myToken', isEqualTo: '$userToken')
+        .orderBy('updateAt', descending: false)
+        .startAfter([lastFetchTime]);
+    await collectionReferences.get(const GetOptions(source: Source.server));
+  }
+
+  Future<void> a() async{
+    final db = FirebaseFirestore.instance;
+    final userToken = ref.read(tokenProvider);
+
+    final stream = await db
+        .collection('chat')
+        .orderBy('updateAt', descending: true)
+        .where('myToken', isEqualTo: '$userToken')
+        .limit(20)
+        .get(const GetOptions(source: Source.cache));
+    print("ストリーム ${stream.docs.length}");
+  }
+
+  Stream<List<ChatDocument>> getStreamChat() {
+    final db = FirebaseFirestore.instance;
+    final userToken = ref.read(tokenProvider);
+
+    final stream = db
+        .collection('chat')
+        .orderBy('updateAt', descending: true)
+        .where('myToken', isEqualTo: '$userToken')
+        .limit(20)
+        .get(const GetOptions(source: Source.cache))
+        .asStream();
+
+    return stream.map((event) =>
+        event.docs.map((e) { print('e.data${e.data()}'); return ChatDocument.fromJson(e.data());}).toList());
+  }
 }
-
-
