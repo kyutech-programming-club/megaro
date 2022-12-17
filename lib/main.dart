@@ -59,8 +59,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     Future(() async {
-      final Uint8List markerIcon =
-          await getBytesFromAsset('assets/images/user_icon.png', 500);
+      final Uint8List markerIcon = await getBytesFromAsset('assets/images/user_icon.png', 240);     
       ref.read(mapIconProvider.notifier).update((state) => markerIcon);
       final token = await FirebaseMessaging.instance.getToken() ?? "token";
       ref.read(tokenProvider.notifier).update((state) => token);

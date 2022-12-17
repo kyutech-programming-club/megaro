@@ -15,7 +15,7 @@ class SendMessageBubble extends StatelessWidget {
             topLeft: Radius.circular(40),
             bottomLeft: Radius.circular(40),
           ),
-          color: ColorConstant.purple95,
+          color: ColorConstant.green95,
         ),
         child: Padding(
           padding: EdgeInsets.all(16.0),

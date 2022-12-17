@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 
 class ColorConstant {
   ColorConstant._();
-  static final  purple100 = Color(0xFFFFFFFF);
-  static final  purple99 = Color(0xFFFFFBFE);
-  static final purple95 = Color(0xFFF6EDFF);
-  static final purple90 = Color(0xFFEADDFF);
-  static final purple80 = Color(0xFFD0BCFF);
-  static final purple70 = Color(0xFFB69DF8);
-  static final purple60 = Color(0xFF9A82DB);
-  static final purple50 = Color(0xFF7F67BE);
-  static final purple40 = Color(0xFF6750A4);
-  static final purple30 = Color(0xFF4F378B);
-  static final purple20 = Color(0xFF381E72);
-  static final purple10 = Color(0xFF21005D);
-  static final purple0 = Color(0xFF000000);
+  static final green100 = Color(0xFFFFFFFF);
+  static final green95 = Color(0xFFC8FFF4);
+  static final green90 = Color(0xFF70EFDE);
+  static final green80 = Color(0xFF03DAC6);
+  static final green70 = Color(0xFF00C4B4);
+  static final green60 = Color(0xFF00B3A6);
+  static final green50 = Color(0xFF01A299);
+  static final green40 = Color(0xFF019592);
+  static final green30 = Color(0xFF018786);
+  static final green20 = Color(0xFF017374);
+  static final green10 = Color(0xFF005457);
+  static final green0 = Color(0xFF000000);
 
   static final  black100 = Color(0xFFFFFFFF);
   static final  black99 = Color(0xFFFAFAFA);
