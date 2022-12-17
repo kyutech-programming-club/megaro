@@ -47,8 +47,7 @@ class TopPage extends ConsumerWidget {
                       );
                     }
                     final CameraPosition _kGooglePlex = CameraPosition(
-                      target: LatLng(
-                          loc.latitude!.toDouble(), loc.longitude!.toDouble()),
+                      target: LatLng(35, 135),
                       zoom: 15,
                     );
                     return GoogleMap(
