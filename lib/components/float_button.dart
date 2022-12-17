@@ -12,10 +12,10 @@ class MessageButton extends ConsumerWidget {
          height: 64,
          child: FloatingActionButton(
               onPressed: () => context.push('/message_page/:'),
-              backgroundColor: ColorConstant.purple40,
+              backgroundColor: ColorConstant.green100,
               child: Icon(
-                Icons.chat_bubble,
-                color: ColorConstant.black100,
+                Icons.chat,
+                color: ColorConstant.green40,
               ),
             ),
        );

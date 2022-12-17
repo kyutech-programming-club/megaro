@@ -12,7 +12,7 @@ Future<DateTime?> datePick(BuildContext context) async {
       return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.light().copyWith(
-              primary: ColorConstant.purple40,
+              primary: ColorConstant.green40,
             ),
           ),
           child: child!

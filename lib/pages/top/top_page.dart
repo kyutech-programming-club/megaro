@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/components/float_button.dart';
+import 'package:flutter_template/constants/color_constant.dart';
 import 'package:flutter_template/providers/domain_providers.dart';
 import 'package:flutter_template/providers/infrastructure_providers.dart';
 import 'package:flutter_template/providers/presentation_providers.dart';
@@ -46,8 +47,9 @@ class TopPage extends ConsumerWidget {
                       );
                     }
                     final CameraPosition _kGooglePlex = CameraPosition(
-                      target: LatLng(35, 135),
-                      zoom: 5,
+                      target: LatLng(
+                          loc.latitude!.toDouble(), loc.longitude!.toDouble()),
+                      zoom: 15,
                     );
                     return GoogleMap(
                       mapType: MapType.normal,
@@ -74,68 +76,88 @@ class TopPage extends ConsumerWidget {
                 );
               }),
               Positioned(
-                left: 8,
-                child: Column(
-                  children: [
-                    Builder(builder: (context) {
-                      return battery.when(
-                        data: (data) {
-                          return Column(
-                            children: [
-                              Text(
-                                '${data.toString()}%',
-                                style: TextStyle(
-                                  fontSize: 56,
+                left: 24,
+                top: 24,
+                child: Container(
+                  height: 88,
+                  width: 240,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: ColorConstant.black40,
+                        spreadRadius: 0.4,
+                        blurRadius: 4.0,
+                      )
+                    ],
+                    color: ColorConstant.green100,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    children: [
+                      Builder(builder: (context) {
+                        return battery.when(
+                          data: (data) {
+                            return Column(
+                              children: [
+                                Text(
+                                  '${data.toString()}%',
+                                  style: TextStyle(
+                                    fontSize: 40,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                '共有できるまで${data - 5}%',
-                                style: TextStyle(
-                                  fontSize: 24,
+                                Text(
+                                  '共有できるまで${data - 5}%',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          );
-                        },
-                        error: (error, stackTrace) {
-                          return Text(error.toString());
-                        },
-                        loading: () {
-                          return Column(
-                            children: [
-                              Text('loading...'),
-                            ],
-                          );
-                        },
-                      );
-                    }),
-                  ],
-                ),
-              ),
-              Positioned(
-                right: 16,
-                top: 16,
-                child: SizedBox(
-                  width: 64,
-                  height: 64,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: Icon(
-                      Icons.person,
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      shape: CircleBorder(),
-                    ),
+                              ],
+                            );
+                          },
+                          error: (error, stackTrace) {
+                            return Text(error.toString());
+                          },
+                          loading: () {
+                            return Column(
+                              children: [
+                                Text('loading...'),
+                              ],
+                            );
+                          },
+                        );
+                      }),
+                    ],
                   ),
                 ),
               ),
               Positioned(
                 bottom: 24,
-                left: 16,
-                child: isRental ? Text(
-                  '貸し出し中',
-                  style: TextStyle(
-                    fontSize: 24,
+                left: 24,
+                child: isRental ? Container(
+                  width: 160,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: ColorConstant.black40,
+                        spreadRadius: 0.4,
+                        blurRadius: 4.0,
+                      )
+                    ],
+                    color: ColorConstant.green100,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.radio_button_checked),
+                      Text(
+                        '貸し出し中',
+                        style: TextStyle(
+                          fontSize: 24,
+                        ),
+                      ),
+                    ],
                   ),
                 ) : SizedBox.shrink()
               ),

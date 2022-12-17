@@ -15,8 +15,8 @@ class NotificationPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: ColorConstant.purple100,
-        foregroundColor: ColorConstant.purple0,
+        backgroundColor: ColorConstant.green100,
+        foregroundColor: ColorConstant.green0,
         elevation: 0.5,
         title: AppbarTitle(),
       ),

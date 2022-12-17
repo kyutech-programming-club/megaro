@@ -59,6 +59,7 @@ dependencies:
   location: ^4.4.0
   google_maps_flutter: ^2.2.2
   battery_plus: ^3.0.2
+  bordered_text: ^2.0.0
 
 
 dev_dependencies:
