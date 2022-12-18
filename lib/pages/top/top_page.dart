@@ -14,6 +14,8 @@ class TopPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _controller = ref.watch(googleMapProvider);
+    final location = ref.watch(locationProvider);
+
     final battery = ref.watch(batteryProvider);
     final mapIcon = ref.watch(mapIconProvider);
     final isRental = ref.watch(isRentalProvider);
@@ -29,20 +31,22 @@ class TopPage extends ConsumerWidget {
           child: Stack(
             children: [
               Builder(builder: (context) {
-                return nearLoc.when(
-                  data: (locs) {
-                    print("length: ${locs.length}");
-                    for (var i = 0; i < locs.length; i++) {
-                      final loc = locs[i];
-                      markers.add(Marker(
-                        //add start location marker
-                        markerId: MarkerId(loc.name),
-                        position: LatLng(loc.lat, loc.long),
-                        //position of marker
-                        infoWindow: InfoWindow(
+                return location.when(
+                  data: (data) {
+                    return nearLoc.when(
+                      data: (locs) {
+                        print("length: ${locs.length}");
+                        for (var i = 0; i < locs.length; i++) {
+                          final loc = locs[i];
+                          markers.add(Marker(
+                            //add start location marker
+                            markerId: MarkerId(loc.name),
+                            position: LatLng(loc.lat, loc.long),
+                            //position of marker
+                            infoWindow: InfoWindow(
                             //popup info
                             title: 'ユーザー名',
-                            snippet: '残り12%',
+                            snippet: '残り${loc.battery}%',
                             onTap: () {
                               showDialog(
                                   context: context,
@@ -64,23 +68,35 @@ class TopPage extends ConsumerWidget {
                                     );
                                   });
                             }),
-                        icon: BitmapDescriptor.fromBytes(
-                            mapIcon!), //Icon for Marker
-                      ));
-                    }
-                    final CameraPosition _kGooglePlex = CameraPosition(
-                      target: LatLng(35, 135),
-                      zoom: 15,
-                    );
-                    return GoogleMap(
-                      mapType: MapType.normal,
-                      initialCameraPosition: _kGooglePlex,
-                      myLocationEnabled: true,
-                      myLocationButtonEnabled: true,
-                      markers: markers,
-                      //polylines: _lines,
-                      onMapCreated: (GoogleMapController controller) {
-                        _controller.complete(controller);
+                            icon: BitmapDescriptor.fromBytes(
+                                mapIcon!), //Icon for Marker
+                          ));
+                        }
+                        final CameraPosition _kGooglePlex = CameraPosition(
+                          target: LatLng(data.latitude!, data.longitude!),
+                          zoom: 15,
+                        );
+                        return GoogleMap(
+                          mapType: MapType.normal,
+                          initialCameraPosition: _kGooglePlex,
+                          myLocationEnabled: true,
+                          mapToolbarEnabled: false,
+                          markers: markers,
+                          //polylines: _lines,
+                          onMapCreated: (GoogleMapController controller) {
+                            _controller.complete(controller);
+                          },
+                        );
+                      },
+                      error: (error, stackTrace) {
+                        return Text(error.toString());
+                      },
+                      loading: () {
+                        return Column(
+                          children: [
+                            Text('loading...'),
+                          ],
+                        );
                       },
                     );
                   },

@@ -23,6 +23,8 @@ mixin _$LocationDocument {
 // ignore: invalid_annotation_target
   @JsonKey(name: 'name')
   String get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'battery')
+  int get battery => throw _privateConstructorUsedError;
   @JsonKey(name: 'position')
   PositionDocument get position => throw _privateConstructorUsedError;
 
@@ -39,6 +41,7 @@ abstract class $LocationDocumentCopyWith<$Res> {
       _$LocationDocumentCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(name: 'name') String name,
+      @JsonKey(name: 'battery') int battery,
       @JsonKey(name: 'position') PositionDocument position});
 
   $PositionDocumentCopyWith<$Res> get position;
@@ -56,6 +59,7 @@ class _$LocationDocumentCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = freezed,
+    Object? battery = freezed,
     Object? position = freezed,
   }) {
     return _then(_value.copyWith(
@@ -63,6 +67,10 @@ class _$LocationDocumentCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      battery: battery == freezed
+          ? _value.battery
+          : battery // ignore: cast_nullable_to_non_nullable
+              as int,
       position: position == freezed
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
@@ -87,6 +95,7 @@ abstract class _$$_LocationDocumentCopyWith<$Res>
   @override
   $Res call(
       {@JsonKey(name: 'name') String name,
+      @JsonKey(name: 'battery') int battery,
       @JsonKey(name: 'position') PositionDocument position});
 
   @override
@@ -107,6 +116,7 @@ class __$$_LocationDocumentCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = freezed,
+    Object? battery = freezed,
     Object? position = freezed,
   }) {
     return _then(_$_LocationDocument(
@@ -114,6 +124,10 @@ class __$$_LocationDocumentCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      battery: battery == freezed
+          ? _value.battery
+          : battery // ignore: cast_nullable_to_non_nullable
+              as int,
       position: position == freezed
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
@@ -127,6 +141,7 @@ class __$$_LocationDocumentCopyWithImpl<$Res>
 class _$_LocationDocument extends _LocationDocument {
   const _$_LocationDocument(
       {@JsonKey(name: 'name') required this.name,
+      @JsonKey(name: 'battery') required this.battery,
       @JsonKey(name: 'position') required this.position})
       : super._();
 
@@ -138,12 +153,15 @@ class _$_LocationDocument extends _LocationDocument {
   @JsonKey(name: 'name')
   final String name;
   @override
+  @JsonKey(name: 'battery')
+  final int battery;
+  @override
   @JsonKey(name: 'position')
   final PositionDocument position;
 
   @override
   String toString() {
-    return 'LocationDocument(name: $name, position: $position)';
+    return 'LocationDocument(name: $name, battery: $battery, position: $position)';
   }
 
   @override
@@ -152,6 +170,7 @@ class _$_LocationDocument extends _LocationDocument {
         (other.runtimeType == runtimeType &&
             other is _$_LocationDocument &&
             const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.battery, battery) &&
             const DeepCollectionEquality().equals(other.position, position));
   }
 
@@ -160,6 +179,7 @@ class _$_LocationDocument extends _LocationDocument {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(battery),
       const DeepCollectionEquality().hash(position));
 
   @JsonKey(ignore: true)
@@ -179,6 +199,8 @@ abstract class _LocationDocument extends LocationDocument {
   const factory _LocationDocument(
       {@JsonKey(name: 'name')
           required final String name,
+      @JsonKey(name: 'battery')
+          required final int battery,
       @JsonKey(name: 'position')
           required final PositionDocument position}) = _$_LocationDocument;
   const _LocationDocument._() : super._();
@@ -189,6 +211,9 @@ abstract class _LocationDocument extends LocationDocument {
   @override // ignore: invalid_annotation_target
   @JsonKey(name: 'name')
   String get name;
+  @override
+  @JsonKey(name: 'battery')
+  int get battery;
   @override
   @JsonKey(name: 'position')
   PositionDocument get position;

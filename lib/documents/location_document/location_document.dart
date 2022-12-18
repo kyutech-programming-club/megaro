@@ -15,6 +15,7 @@ class LocationDocument with _$LocationDocument {
   const factory LocationDocument({
     // ignore: invalid_annotation_target
     @JsonKey(name: 'name') required String name,
+    @JsonKey(name: 'battery') required int battery,
     @JsonKey(name: 'position') required PositionDocument position,
   }) = _LocationDocument;
 
@@ -25,6 +26,7 @@ class LocationDocument with _$LocationDocument {
       LocationEntity locationEntity, Ref ref) async {
     return LocationDocument(
       name: locationEntity.name,
+      battery: locationEntity.battery,
       position: PositionDocument(
         geoHash: locationEntity.hash,
         geoPoint: GeoPoint(locationEntity.lat, locationEntity.long),
