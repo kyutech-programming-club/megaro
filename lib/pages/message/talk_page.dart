@@ -75,29 +75,32 @@ class TalkPage extends ConsumerWidget {
       ),
       bottomSheet: Container(
         padding: EdgeInsets.all(8),
-        height: 40,
-        color: ColorConstant.black100,
+        height: 64,
         child: Align(
           alignment: Alignment.center,
           child: Row(
             children: [
-              SizedBox(
-                width: 264,
-                height: 48,
-                child: TextFormField(
-                  textAlign: TextAlign.left,
-                  autofocus: true,
-                  cursorColor: ColorConstant.green40,
-                  decoration: InputDecoration(
-                    fillColor: ColorConstant.green95,
-                    filled: true,
-                    hintText: 'メッセージを入力',
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    border: InputBorder.none,
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: ColorConstant.black95,
+                      borderRadius: BorderRadius.circular(32)
+                  ),
+                  child: TextFormField(
+                    textAlign: TextAlign.left,
+                    autofocus: true,
+                    cursorColor: ColorConstant.green40,
+                    decoration: InputDecoration(
+                      fillColor: ColorConstant.green95,
+                      filled: true,
+                      hintText: 'メッセージを入力',
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      border: InputBorder.none,
+                    ),
                   ),
                 ),
               ),
-              Spacer(),
+              SizedBox(width: 16),
               Icon(
                 Icons.send,
                 color: ColorConstant.green40,
