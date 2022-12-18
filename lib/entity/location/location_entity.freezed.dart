@@ -20,6 +20,7 @@ mixin _$LocationEntity {
   String get hash => throw _privateConstructorUsedError;
   double get lat => throw _privateConstructorUsedError;
   double get long => throw _privateConstructorUsedError;
+  int get battery => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LocationEntityCopyWith<LocationEntity> get copyWith =>
@@ -31,7 +32,7 @@ abstract class $LocationEntityCopyWith<$Res> {
   factory $LocationEntityCopyWith(
           LocationEntity value, $Res Function(LocationEntity) then) =
       _$LocationEntityCopyWithImpl<$Res>;
-  $Res call({String name, String hash, double lat, double long});
+  $Res call({String name, String hash, double lat, double long, int battery});
 }
 
 /// @nodoc
@@ -49,6 +50,7 @@ class _$LocationEntityCopyWithImpl<$Res>
     Object? hash = freezed,
     Object? lat = freezed,
     Object? long = freezed,
+    Object? battery = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -67,6 +69,10 @@ class _$LocationEntityCopyWithImpl<$Res>
           ? _value.long
           : long // ignore: cast_nullable_to_non_nullable
               as double,
+      battery: battery == freezed
+          ? _value.battery
+          : battery // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -78,7 +84,7 @@ abstract class _$$_LocationEntityCopyWith<$Res>
           _$_LocationEntity value, $Res Function(_$_LocationEntity) then) =
       __$$_LocationEntityCopyWithImpl<$Res>;
   @override
-  $Res call({String name, String hash, double lat, double long});
+  $Res call({String name, String hash, double lat, double long, int battery});
 }
 
 /// @nodoc
@@ -98,6 +104,7 @@ class __$$_LocationEntityCopyWithImpl<$Res>
     Object? hash = freezed,
     Object? lat = freezed,
     Object? long = freezed,
+    Object? battery = freezed,
   }) {
     return _then(_$_LocationEntity(
       name: name == freezed
@@ -116,6 +123,10 @@ class __$$_LocationEntityCopyWithImpl<$Res>
           ? _value.long
           : long // ignore: cast_nullable_to_non_nullable
               as double,
+      battery: battery == freezed
+          ? _value.battery
+          : battery // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -127,7 +138,8 @@ class _$_LocationEntity extends _LocationEntity {
       {required this.name,
       required this.hash,
       required this.lat,
-      required this.long})
+      required this.long,
+      required this.battery})
       : super._();
 
   @override
@@ -138,10 +150,12 @@ class _$_LocationEntity extends _LocationEntity {
   final double lat;
   @override
   final double long;
+  @override
+  final int battery;
 
   @override
   String toString() {
-    return 'LocationEntity(name: $name, hash: $hash, lat: $lat, long: $long)';
+    return 'LocationEntity(name: $name, hash: $hash, lat: $lat, long: $long, battery: $battery)';
   }
 
   @override
@@ -152,7 +166,8 @@ class _$_LocationEntity extends _LocationEntity {
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.hash, hash) &&
             const DeepCollectionEquality().equals(other.lat, lat) &&
-            const DeepCollectionEquality().equals(other.long, long));
+            const DeepCollectionEquality().equals(other.long, long) &&
+            const DeepCollectionEquality().equals(other.battery, battery));
   }
 
   @override
@@ -161,7 +176,8 @@ class _$_LocationEntity extends _LocationEntity {
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(hash),
       const DeepCollectionEquality().hash(lat),
-      const DeepCollectionEquality().hash(long));
+      const DeepCollectionEquality().hash(long),
+      const DeepCollectionEquality().hash(battery));
 
   @JsonKey(ignore: true)
   @override
@@ -174,7 +190,8 @@ abstract class _LocationEntity extends LocationEntity {
       {required final String name,
       required final String hash,
       required final double lat,
-      required final double long}) = _$_LocationEntity;
+      required final double long,
+      required final int battery}) = _$_LocationEntity;
   const _LocationEntity._() : super._();
 
   @override
@@ -185,6 +202,8 @@ abstract class _LocationEntity extends LocationEntity {
   double get lat;
   @override
   double get long;
+  @override
+  int get battery;
   @override
   @JsonKey(ignore: true)
   _$$_LocationEntityCopyWith<_$_LocationEntity> get copyWith =>

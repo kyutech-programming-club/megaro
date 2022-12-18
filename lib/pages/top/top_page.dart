@@ -46,7 +46,7 @@ class TopPage extends ConsumerWidget {
                             infoWindow: InfoWindow(
                             //popup info
                             title: 'ユーザー名',
-                            snippet: '残り12%',
+                            snippet: '残り${loc.battery}%',
                             onTap: () {
                               showDialog(
                                   context: context,
@@ -75,7 +75,7 @@ class TopPage extends ConsumerWidget {
                           mapType: MapType.normal,
                           initialCameraPosition: _kGooglePlex,
                           myLocationEnabled: true,
-                          myLocationButtonEnabled: true,
+                          mapToolbarEnabled: false,
                           markers: markers,
                           //polylines: _lines,
                           onMapCreated: (GoogleMapController controller) {

@@ -45,6 +45,7 @@ class FirestoreDataSource {
     /// Todo
     await collectionReference.doc(locationDocument.name).set({
       "name": locationJson['name'],
+      "battery": locationJson['battery'],
       "position": positionJson,
     });
   }
@@ -64,6 +65,12 @@ class FirestoreDataSource {
         .within(center: center, radius: radius, field: field, strictMode: true)
         .map((event) =>
             event.map((e) => LocationDocument.fromJson(e.data()!)).toList());
+  }
+
+  Future<void> deleteLocation() async {
+    final db = FirebaseFirestore.instance.collection('shop');
+    final token = ref.read(tokenProvider);
+    await db.doc(token).delete();
   }
 
   ///
