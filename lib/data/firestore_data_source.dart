@@ -67,6 +67,12 @@ class FirestoreDataSource {
             event.map((e) => LocationDocument.fromJson(e.data()!)).toList());
   }
 
+  Future<void> deleteLocation() async {
+    final db = FirebaseFirestore.instance.collection('shop');
+    final token = ref.read(tokenProvider);
+    await db.doc(token).delete();
+  }
+
   ///
   /// chat
   ///

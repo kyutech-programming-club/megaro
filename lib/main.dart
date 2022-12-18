@@ -9,9 +9,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_template/constants/color_constant.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_template/data/firestore_data_source.dart';
 import 'package:flutter_template/entity/location/location_entity.dart';
 import 'package:flutter_template/providers/domain_providers.dart';
 import 'package:flutter_template/providers/infrastructure_providers.dart';
+import 'package:flutter_template/providers/presentation_providers.dart';
 import 'package:flutter_template/repositories/location_repository.dart';
 import 'package:flutter_template/utils/router.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
@@ -35,7 +37,7 @@ class MyApp extends ConsumerStatefulWidget {
   ConsumerState<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends ConsumerState<MyApp> {
+class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   final AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -57,9 +59,28 @@ class _MyAppState extends ConsumerState<MyApp> {
   }
 
   @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    if(state == AppLifecycleState.resumed){
+      // アプリが復帰した(resumed)時に実行したい処理;
+      print("復帰したよ");
+    } else if (state == AppLifecycleState.detached || state == AppLifecycleState.paused) {
+      print("落ちたよ");
+      await ref.read(firestoreProvider).deleteLocation();
+    }
+  }
+
+  @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     Future(() async {
-      final Uint8List markerIcon = await getBytesFromAsset('assets/images/user_icon.png', 240);     
+      final Uint8List markerIcon =
+          await getBytesFromAsset('assets/images/user_icon.png', 240);
       ref.read(mapIconProvider.notifier).update((state) => markerIcon);
       final token = await FirebaseMessaging.instance.getToken() ?? "token";
       ref.read(tokenProvider.notifier).update((state) => token);
