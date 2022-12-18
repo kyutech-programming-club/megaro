@@ -114,22 +114,38 @@ class TopPage extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Builder(builder: (context) {
                         return battery.when(
                           data: (data) {
                             return Column(
                               children: [
-                                Text(
-                                  '${data.toString()}%',
-                                  style: TextStyle(
-                                    fontSize: 40,
-                                  ),
+                                RichText(
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                        color: ColorConstant.green30,
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                          text: '${data.toString()}',
+                                          style: TextStyle(
+                                            fontSize: 40,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: '%',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ]),
                                 ),
                                 Text(
-                                  '共有できるまで${data - 5}%',
+                                  '出会いまで${data - 5}%',
                                   style: TextStyle(
                                     fontSize: 16,
+                                    color: ColorConstant.green30,
                                   ),
                                 ),
                               ],
@@ -177,6 +193,7 @@ class TopPage extends ConsumerWidget {
                                 '貸し出し中',
                                 style: TextStyle(
                                   fontSize: 24,
+                                  color: ColorConstant.green30,
                                 ),
                               ),
                             ],
