@@ -128,7 +128,7 @@ class FirestoreDataSource {
     final stream = db
         .collection('chat')
         .orderBy('updateAt', descending: true)
-        .where('oppToken', isEqualTo: '$userToken')
+        .where('opponentToken', isEqualTo: '$userToken')
         .limit(20)
         .snapshots();
     return stream.map((event) => event.docs
@@ -145,7 +145,7 @@ class FirestoreDataSource {
         .collection('chat')
         .orderBy('updateAt', descending: true)
         .where('myToken', isEqualTo: userToken)
-        .where('oppToken', isEqualTo: oppToken)
+        .where('opponentToken', isEqualTo: oppToken)
         .limit(20)
         .snapshots();
     return stream.map((event) => event.docs
@@ -161,7 +161,7 @@ class FirestoreDataSource {
     final stream = db
         .collection('chat')
         .orderBy('updateAt', descending: true)
-        .where('oppToken', isEqualTo: '$userToken')
+        .where('opponentToken', isEqualTo: '$userToken')
         .where('myToken', isEqualTo: oppToken)
         .limit(20)
         .snapshots();
