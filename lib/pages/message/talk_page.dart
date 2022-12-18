@@ -82,11 +82,12 @@ class TalkPage extends ConsumerWidget {
           child: Row(
             children: [
               SizedBox(
-                width: 264,
-                height: 48,
+                width: 320,
+                height: 72,
                 child: TextFormField(
                   textAlign: TextAlign.left,
                   autofocus: true,
+                  cursorHeight: 32,
                   cursorColor: ColorConstant.green40,
                   decoration: InputDecoration(
                     fillColor: ColorConstant.green95,
