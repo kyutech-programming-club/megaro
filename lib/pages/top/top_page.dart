@@ -5,6 +5,7 @@ import 'package:flutter_template/constants/color_constant.dart';
 import 'package:flutter_template/providers/domain_providers.dart';
 import 'package:flutter_template/providers/infrastructure_providers.dart';
 import 'package:flutter_template/providers/presentation_providers.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class TopPage extends ConsumerWidget {
@@ -14,6 +15,7 @@ class TopPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final _controller = ref.watch(googleMapProvider);
     final location = ref.watch(locationProvider);
+
     final battery = ref.watch(batteryProvider);
     final mapIcon = ref.watch(mapIconProvider);
     final isRental = ref.watch(isRentalProvider);
@@ -42,10 +44,25 @@ class TopPage extends ConsumerWidget {
                             position: LatLng(loc.lat, loc.long),
                             //position of marker
                             infoWindow: InfoWindow(
-                              //popup info
-                              title: 'Starting Point ',
-                              snippet: 'Start Marker',
-                            ),
+                            //popup info
+                            title: 'ユーザー名',
+                            snippet: '残り12%',
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) {
+                                    return AlertDialog(
+                                      title: Text('ユーザー名'),
+                                      actions: [
+                                        ElevatedButton(
+                                          onPressed: () => context.push('/message_page/talk_page/:', extra: loc.name
+                                          ),
+                                          child: Icon(Icons.chat_bubble),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            }),
                             icon: BitmapDescriptor.fromBytes(
                                 mapIcon!), //Icon for Marker
                           ));
