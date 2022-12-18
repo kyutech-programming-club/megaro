@@ -7,23 +7,26 @@ class ReceiveMessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CircleAvatar(),
-        SizedBox(
-          width: 16.0,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: ColorConstant.green95,
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Row(
+        children: [
+          CircleAvatar(),
+          SizedBox(
+            width: 16.0,
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(message),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: ColorConstant.green95,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(message),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

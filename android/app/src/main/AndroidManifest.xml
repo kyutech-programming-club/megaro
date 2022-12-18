@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.megaro">
    <application
-        android:label="スキマ管理"
+        android:label="リア充"
         android:icon="@mipmap/ic_launcher">
        <meta-data
            android:name="com.google.android.geo.API_KEY"

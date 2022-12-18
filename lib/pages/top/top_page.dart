@@ -81,6 +81,7 @@ class TopPage extends ConsumerWidget {
                           initialCameraPosition: _kGooglePlex,
                           myLocationEnabled: true,
                           mapToolbarEnabled: false,
+                          zoomControlsEnabled: false,
                           markers: markers,
                           //polylines: _lines,
                           onMapCreated: (GoogleMapController controller) {
@@ -92,11 +93,7 @@ class TopPage extends ConsumerWidget {
                         return Text(error.toString());
                       },
                       loading: () {
-                        return Column(
-                          children: [
-                            Text('loading...'),
-                          ],
-                        );
+                        return Center(child: CircularProgressIndicator());
                       },
                     );
                   },
@@ -104,11 +101,7 @@ class TopPage extends ConsumerWidget {
                     return Text(error.toString());
                   },
                   loading: () {
-                    return Column(
-                      children: [
-                        Text('loading...'),
-                      ],
-                    );
+                    return Center(child: CircularProgressIndicator());
                   },
                 );
               }),
@@ -171,11 +164,7 @@ class TopPage extends ConsumerWidget {
                             return Text(error.toString());
                           },
                           loading: () {
-                            return Column(
-                              children: [
-                                Text('loading...'),
-                              ],
-                            );
+                            return CircularProgressIndicator();
                           },
                         );
                       }),
@@ -203,6 +192,7 @@ class TopPage extends ConsumerWidget {
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Icon(Icons.radio_button_checked),
                               Text(

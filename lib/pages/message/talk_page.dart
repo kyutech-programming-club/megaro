@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_template/constants/color_constant.dart';
+import 'package:flutter_template/entity/chat/chat_entity.dart';
 import 'package:flutter_template/pages/message/children/receive_message_bubble.dart';
 import 'package:flutter_template/pages/message/children/send_message_bubble.dart';
+import 'package:flutter_template/providers/domain_providers.dart';
 import 'package:flutter_template/providers/infrastructure_providers.dart';
+import 'package:flutter_template/providers/presentation_providers.dart';
+import 'package:flutter_template/repositories/chat_repository.dart';
 
 class TalkPage extends ConsumerWidget {
   const TalkPage({Key? key, required this.oppToken}) : super(key: key);
@@ -13,6 +17,7 @@ class TalkPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final myOpp = ref.watch(chatMyOppStreamProvider(oppToken));
     final oppMy = ref.watch(chatOppMyStreamProvider(oppToken));
+    print("ああi");
     return Scaffold(
       backgroundColor: ColorConstant.black100,
       appBar: AppBar(
@@ -32,6 +37,7 @@ class TalkPage extends ConsumerWidget {
               return oppMy.when(
                 data: (oppMy) {
                   return ListView.builder(
+                    reverse: true,
                     itemCount: myOpp.length + oppMy.length,
                     itemBuilder: (BuildContext context, int index) {
                       final messages = [...myOpp, ...oppMy];
@@ -87,6 +93,7 @@ class TalkPage extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(32)
                   ),
                   child: TextFormField(
+                    onChanged: (value) => ref.watch(exampleTextFieldProvider.notifier).update((state) => value),
                     textAlign: TextAlign.left,
                     autofocus: true,
                     cursorColor: ColorConstant.green40,
@@ -101,9 +108,20 @@ class TalkPage extends ConsumerWidget {
                 ),
               ),
               SizedBox(width: 16),
-              Icon(
-                Icons.send,
-                color: ColorConstant.green40,
+              GestureDetector(
+                onTap: () {
+                  ref.read(chatRepositoryProvider).addChat(ChatEntity(
+                      myToken: ref.read(tokenProvider),
+                      opponentToken: oppToken,
+                      message: ref.watch(exampleTextFieldProvider),
+                      unread: 0,
+                      updateAt: DateTime.now()));
+                  ref.read(exampleTextFieldProvider.notifier).update((state) => '');
+                },
+                child: Icon(
+                  Icons.send,
+                  color: ColorConstant.green40,
+                ),
               ),
             ],
           ),
