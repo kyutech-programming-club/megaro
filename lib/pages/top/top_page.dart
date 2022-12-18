@@ -44,30 +44,30 @@ class TopPage extends ConsumerWidget {
                             position: LatLng(loc.lat, loc.long),
                             //position of marker
                             infoWindow: InfoWindow(
-                            //popup info
-                            title: 'ユーザー名',
-                            snippet: '残り${loc.battery}%',
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (_) {
-                                    return AlertDialog(
-                                      title: Text('ユーザー名'),
-                                      actions: [
-                                        ElevatedButton(
-                                          style:ElevatedButton.styleFrom(
-                                            backgroundColor: ColorConstant.green40,
-                                          ),
-                                          onPressed: () => context.push(
-                                              '/message_page/talk_page/:',
-                                              extra: loc.name),
-                                          child: Icon(
-                                              Icons.chat_bubble),
-                                        ),
-                                      ],
-                                    );
-                                  });
-                            }),
+                                //popup info
+                                title: 'ユーザー名',
+                                snippet: '残り${loc.battery}%',
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) {
+                                        return AlertDialog(
+                                          title: Text('ユーザー名'),
+                                          actions: [
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor:
+                                                    ColorConstant.green40,
+                                              ),
+                                              onPressed: () => context.push(
+                                                  '/message_page/talk_page/:',
+                                                  extra: loc.name),
+                                              child: Icon(Icons.chat_bubble),
+                                            ),
+                                          ],
+                                        );
+                                      });
+                                }),
                             icon: BitmapDescriptor.fromBytes(
                                 mapIcon!), //Icon for Marker
                           ));
@@ -194,7 +194,10 @@ class TopPage extends ConsumerWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(Icons.radio_button_checked),
+                              Icon(
+                                Icons.power,
+                                color: ColorConstant.green30,
+                              ),
                               Text(
                                 '貸し出し中',
                                 style: TextStyle(
