@@ -31,7 +31,7 @@ class TalkPage extends ConsumerWidget {
           color: ColorConstant.black100,
           padding: EdgeInsets.all(8),
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height - 160,
           child: myOpp.when(
             data: (myOpp) {
               return oppMy.when(
@@ -116,7 +116,6 @@ class TalkPage extends ConsumerWidget {
                       message: ref.watch(exampleTextFieldProvider),
                       unread: 0,
                       updateAt: DateTime.now()));
-                  ref.read(exampleTextFieldProvider.notifier).update((state) => '');
                 },
                 child: Icon(
                   Icons.send,
