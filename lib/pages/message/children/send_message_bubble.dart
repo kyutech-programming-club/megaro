@@ -4,6 +4,7 @@ import 'package:flutter_template/constants/color_constant.dart';
 class SendMessageBubble extends StatelessWidget {
   const SendMessageBubble({Key? key, required this.message}) : super(key: key);
   final String message;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -12,6 +13,13 @@ class SendMessageBubble extends StatelessWidget {
         alignment: Alignment.centerRight,
         child: Container(
           decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: ColorConstant.black60,
+                spreadRadius: 0.1,
+                blurRadius: 1,
+              )
+            ],
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(40),
               topLeft: Radius.circular(40),
