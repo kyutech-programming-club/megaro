@@ -51,9 +51,14 @@ class TopPage extends ConsumerWidget {
                                       title: Text('ユーザー名'),
                                       actions: [
                                         ElevatedButton(
-                                          onPressed: () => context.push('/message_page/talk_page/:', extra: loc.name
+                                          style:ElevatedButton.styleFrom(
+                                            backgroundColor: ColorConstant.green40,
                                           ),
-                                          child: Icon(Icons.chat_bubble),
+                                          onPressed: () => context.push(
+                                              '/message_page/talk_page/:',
+                                              extra: loc.name),
+                                          child: Icon(
+                                              Icons.chat_bubble),
                                         ),
                                       ],
                                     );
