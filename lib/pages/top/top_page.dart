@@ -5,6 +5,7 @@ import 'package:flutter_template/constants/color_constant.dart';
 import 'package:flutter_template/providers/domain_providers.dart';
 import 'package:flutter_template/providers/infrastructure_providers.dart';
 import 'package:flutter_template/providers/presentation_providers.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class TopPage extends ConsumerWidget {
@@ -13,7 +14,6 @@ class TopPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _controller = ref.watch(googleMapProvider);
-    final location = ref.watch(currentLocationStreamProvider);
     final battery = ref.watch(batteryProvider);
     final mapIcon = ref.watch(mapIconProvider);
     final isRental = ref.watch(isRentalProvider);
@@ -34,21 +34,37 @@ class TopPage extends ConsumerWidget {
                     print("length: ${locs.length}");
                     for (var i = 0; i < locs.length; i++) {
                       final loc = locs[i];
-                      markers.add(
-                          Marker( //add start location marker
-                            markerId: MarkerId(loc.name),
-                            position: LatLng(loc.lat, loc.long),//position of marker
-                            infoWindow: InfoWindow( //popup info
-                              title: 'Starting Point ',
-                              snippet: 'Start Marker',
-                            ),
-                            icon: BitmapDescriptor.fromBytes(mapIcon!), //Icon for Marker
-                          )
-                      );
+                      markers.add(Marker(
+                        //add start location marker
+                        markerId: MarkerId(loc.name),
+                        position: LatLng(loc.lat, loc.long),
+                        //position of marker
+                        infoWindow: InfoWindow(
+                            //popup info
+                            title: 'ユーザー名',
+                            snippet: '残り12%',
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (_) {
+                                    return AlertDialog(
+                                      title: Text('ユーザー名'),
+                                      actions: [
+                                        ElevatedButton(
+                                          onPressed: () => context.push('/message_page/talk_page/:', extra: loc.name
+                                          ),
+                                          child: Icon(Icons.chat_bubble),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            }),
+                        icon: BitmapDescriptor.fromBytes(
+                            mapIcon!), //Icon for Marker
+                      ));
                     }
                     final CameraPosition _kGooglePlex = CameraPosition(
-                      target: LatLng(
-                          loc.latitude!.toDouble(), loc.longitude!.toDouble()),
+                      target: LatLng(35, 135),
                       zoom: 15,
                     );
                     return GoogleMap(
@@ -131,36 +147,37 @@ class TopPage extends ConsumerWidget {
                 ),
               ),
               Positioned(
-                bottom: 24,
-                left: 24,
-                child: isRental ? Container(
-                  width: 160,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: ColorConstant.black40,
-                        spreadRadius: 0.4,
-                        blurRadius: 4.0,
-                      )
-                    ],
-                    color: ColorConstant.green100,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.radio_button_checked),
-                      Text(
-                        '貸し出し中',
-                        style: TextStyle(
-                          fontSize: 24,
-                        ),
-                      ),
-                    ],
-                  ),
-                ) : SizedBox.shrink()
-              ),
+                  bottom: 24,
+                  left: 24,
+                  child: isRental
+                      ? Container(
+                          width: 160,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: ColorConstant.black40,
+                                spreadRadius: 0.4,
+                                blurRadius: 4.0,
+                              )
+                            ],
+                            color: ColorConstant.green100,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.radio_button_checked),
+                              Text(
+                                '貸し出し中',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : SizedBox.shrink()),
             ],
           ),
         ),
