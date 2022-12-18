@@ -61,11 +61,7 @@ class MessagePage extends ConsumerWidget {
                   return Text(error.toString());
                 },
                 loading: () {
-                  return Column(
-                    children: [
-                      Text('loading...'),
-                    ],
-                  );
+                  return Center(child: CircularProgressIndicator());
                 },
               );
             },
