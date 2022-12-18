@@ -71,13 +71,16 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     ref.watch(currentLocationStreamProvider).whenData((value) {
-      final token = ref.read(tokenProvider);
-      ref.read(locationRepositoryProvider).addLocation(
-            LocationEntity.fromGeoPoint(
-              token,
-              GeoFirePoint(value.latitude!, value.longitude!),
-            ),
-          );
+      ref.read(batteryProvider).whenData((battery) {
+        final token = ref.read(tokenProvider);
+        ref.read(locationRepositoryProvider).addLocation(
+              LocationEntity.fromGeoPoint(
+                token,
+                GeoFirePoint(value.latitude!, value.longitude!),
+                battery,
+              ),
+            );
+      });
     });
     return MaterialApp.router(
       localizationsDelegates: [

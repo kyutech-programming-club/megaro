@@ -13,6 +13,7 @@ class LocationEntity with _$LocationEntity {
     required String hash,
     required double lat,
     required double long,
+    required int battery,
   }) = _LocationEntity;
 
   static LocationEntity fromDoc(LocationDocument locationDocument) {
@@ -21,15 +22,17 @@ class LocationEntity with _$LocationEntity {
       hash: locationDocument.position.geoHash,
       lat: locationDocument.position.geoPoint.latitude,
       long: locationDocument.position.geoPoint.longitude,
+      battery: locationDocument.battery,
     );
   }
 
-  static LocationEntity fromGeoPoint(String token, GeoFirePoint geoPoint) {
+  static LocationEntity fromGeoPoint(String token, GeoFirePoint geoPoint, int battery) {
     return LocationEntity(
       name: token,
       hash: geoPoint.hash,
       lat: geoPoint.latitude,
       long: geoPoint.longitude,
+      battery: battery,
     );
   }
 }

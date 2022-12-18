@@ -45,6 +45,7 @@ class FirestoreDataSource {
     /// Todo
     await collectionReference.doc(locationDocument.name).set({
       "name": locationJson['name'],
+      "battery": locationJson['battery'],
       "position": positionJson,
     });
   }
